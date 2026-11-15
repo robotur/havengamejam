@@ -1,0 +1,57 @@
+[gd_scene format=3 uid="uid://cd1l08nkjdkm0"]
+
+[ext_resource type="Script" uid="uid://ccwghaf7in1ay" path="res://scripts/Main_Menu_Script.gd" id="1_jfien"]
+[ext_resource type="Texture2D" uid="uid://cvwdstkb10r6o" path="res://assets/play.png" id="2_yb5uv"]
+[ext_resource type="Texture2D" uid="uid://be0lf0giyd6tw" path="res://assets/quit.png" id="3_h8c6n"]
+[ext_resource type="Texture2D" uid="uid://dyeomgxrjoeha" path="res://assets/sprites/Logo.png" id="4_ytedg"]
+
+[node name="MainMenu" type="Node2D" unique_id=20666243]
+
+[node name="Control" type="Control" parent="." unique_id=1996824121]
+layout_mode = 3
+anchors_preset = 0
+offset_left = -38.0
+offset_top = -56.0
+offset_right = 39.0
+offset_bottom = 40.0
+script = ExtResource("1_jfien")
+
+[node name="ColorRect" type="ColorRect" parent="Control" unique_id=2112339666]
+layout_mode = 0
+offset_left = -526.0
+offset_top = -232.0
+offset_right = 596.0
+offset_bottom = 413.0
+color = Color(0.27058825, 0.15686275, 0.23529412, 1)
+
+[node name="Play" type="TextureButton" parent="Control" unique_id=1590267557]
+layout_mode = 0
+offset_left = -58.0
+offset_top = 110.0
+offset_right = 138.0
+offset_bottom = 207.0
+texture_normal = ExtResource("2_yb5uv")
+
+[node name="Quit" type="TextureButton" parent="Control" unique_id=704055490]
+layout_mode = 0
+offset_left = -22.0
+offset_top = 288.0
+offset_right = 150.0
+offset_bottom = 392.0
+scale = Vector2(0.8, 0.8)
+texture_normal = ExtResource("3_h8c6n")
+
+[node name="TextureRect" type="TextureRect" parent="Control" unique_id=713536191]
+layout_mode = 0
+offset_left = -174.0
+offset_top = -147.0
+offset_right = 252.0
+offset_bottom = 98.0
+texture = ExtResource("4_ytedg")
+
+[node name="Camera2D" type="Camera2D" parent="." unique_id=236343403]
+position = Vector2(0, 36)
+zoom = Vector2(1.05, 1.05)
+
+[connection signal="pressed" from="Control/Play" to="Control" method="_on_play_pressed"]
+[connection signal="pressed" from="Control/Quit" to="Control" method="_on_quit_pressed"]

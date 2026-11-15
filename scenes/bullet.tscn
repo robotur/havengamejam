@@ -1,0 +1,14 @@
+[gd_scene format=3 uid="uid://df4ri3kuygu1v"]
+
+[ext_resource type="Texture2D" uid="uid://boyo1hwyuidq0" path="res://assets/sprites/Weapons.png" id="1_mkf8s"]
+[ext_resource type="Script" uid="uid://b2evsobx6j2kt" path="res://scripts/bullet.gd" id="1_y25gk"]
+
+[node name="Bullet" type="Node2D" unique_id=1446877727]
+script = ExtResource("1_y25gk")
+wall_collision_mask = 4
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=963255362]
+rotation = -1.5707964
+texture = ExtResource("1_mkf8s")
+region_enabled = true
+region_rect = Rect2(199.51964, 31.594597, 3.8516235, 5.76178)

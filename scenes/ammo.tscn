@@ -1,0 +1,22 @@
+[gd_scene format=3 uid="uid://dcy6qourtew0h"]
+
+[ext_resource type="Texture2D" uid="uid://boyo1hwyuidq0" path="res://assets/sprites/Weapons.png" id="1_8affh"]
+[ext_resource type="Script" uid="uid://c0s6kkgwynnai" path="res://scripts/ammo_pickup.gd" id="1_oosrp"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_kogeq"]
+size = Vector2(18, 12)
+
+[node name="Ammo" type="Area2D" unique_id=593675827]
+collision_mask = 2
+script = ExtResource("1_oosrp")
+ammo_amount = 2
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1501151644]
+texture = ExtResource("1_8affh")
+region_enabled = true
+region_rect = Rect2(31.699146, 35.535732, 23.529388, 13.02243)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=204292129]
+shape = SubResource("RectangleShape2D_kogeq")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]

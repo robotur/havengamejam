@@ -1,0 +1,42 @@
+[gd_scene format=3 uid="uid://c0b7jmc6eqxe1"]
+
+[ext_resource type="Script" uid="uid://qyqr8c40416l" path="res://scripts/story.gd" id="1_1octt"]
+[ext_resource type="FontFile" uid="uid://bq0vgffbassid" path="res://assets/fonts/PixelOperator8-Bold.ttf" id="2_md1pp"]
+[ext_resource type="AudioStream" uid="uid://b8aantbtns2la" path="res://assets/sounds/tap.wav" id="3_md1pp"]
+
+[node name="story" type="Control" unique_id=826294827]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_1octt")
+
+[node name="ColorRect" type="ColorRect" parent="." unique_id=1872957804]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 1)
+
+[node name="Label" type="Label" parent="." unique_id=33519471]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 279.0
+offset_top = 279.0
+offset_right = -276.0
+offset_bottom = -110.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_fonts/font = ExtResource("2_md1pp")
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 2
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="." unique_id=181381761]
+stream = ExtResource("3_md1pp")

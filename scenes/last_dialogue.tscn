@@ -1,0 +1,127 @@
+[gd_scene format=3 uid="uid://ds54yuphoqp4d"]
+
+[ext_resource type="AudioStream" uid="uid://b8aantbtns2la" path="res://assets/sounds/tap.wav" id="1_qwhmd"]
+[ext_resource type="FontFile" uid="uid://bq0vgffbassid" path="res://assets/fonts/PixelOperator8-Bold.ttf" id="1_vjh85"]
+
+[sub_resource type="GDScript" id="GDScript_qwhmd"]
+script/source = "extends CanvasLayer
+
+@onready var dialogue_box: PanelContainer = $DialogueBox
+@onready var label: Label = $DialogueBox/Label
+@onready var blip_sound: AudioStreamPlayer = $AudioStreamPlayer
+@onready var gunshot_sound: AudioStreamPlayer = $GunshotSound # Optional: add your gunshot wav here
+
+var witch_lines: Array[String] = [
+	\"Hah! You abandoned your blade for that hunk of iron, knight?\",
+	\"The sun is setting—it is a part of you now!\",
+	\"You may have stripped me of my honor, witch...\",
+	\"But I learned how to pull the trigger.\"
+]
+
+var current_line: int = 0
+var is_typing: bool = false
+var dialogue_active: bool = false
+var has_triggered: bool = false
+
+func _ready() -> void:
+	dialogue_box.visible = false
+
+# Connected from WizardTrigger's body_entered signal
+func _on_wizard_trigger_body_entered(body: Node2D) -> void:
+	# Make sure it's the player (check your player node's name or group)
+	if body.name == \"Player\" or body.is_in_group(\"player\"):
+		if not has_triggered:
+			has_triggered = true
+			start_dialogue(body)
+
+func start_dialogue(player: Node2D) -> void:
+	dialogue_active = true
+	dialogue_box.visible = true
+	
+	# Freeze player movement during cutscene (optional)
+	player.set_physics_process(false)
+	
+	current_line = 0
+	show_line(current_line)
+
+func _unhandled_input(event: InputEvent) -> void:
+	if not dialogue_active:
+		return
+		
+	if event.is_action_pressed(\"ui_accept\") or (event is InputEventMouseButton and event.pressed):
+		if is_typing:
+			label.visible_characters = label.text.length()
+			is_typing = false
+		else:
+			current_line += 1
+			if current_line < witch_lines.size():
+				show_line(current_line)
+			else:
+				end_game_sequence()
+
+func show_line(index: int) -> void:
+	is_typing = true
+	label.text = witch_lines[index]
+	label.visible_characters = 0
+	
+	for i in range(label.text.length()):
+		if not is_typing:
+			break
+		label.visible_characters += 1
+		if label.text[i] != \" \":
+			blip_sound.play()
+		await get_tree().create_timer(0.05).timeout
+		
+	is_typing = false
+
+func end_game_sequence() -> void:
+	dialogue_active = false
+	dialogue_box.visible = false
+	
+	# Play the gunshot sound, wait 1.5 seconds, then end/return to main menu
+	if gunshot_sound:
+		gunshot_sound.play()
+	await get_tree().create_timer(1.5).timeout
+	get_tree().change_scene_to_file(\"res://scenes/Main_Menu.tscn\")
+"
+
+[node name="DialogueUI" type="CanvasLayer" unique_id=880750009]
+script = SubResource("GDScript_qwhmd")
+
+[node name="ColorRect" type="ColorRect" parent="." unique_id=644905482]
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 88.0
+offset_top = -194.0
+offset_right = -71.0
+offset_bottom = -31.0
+grow_horizontal = 2
+grow_vertical = 0
+
+[node name="DialogueBox" type="ColorRect" parent="." unique_id=680645090]
+custom_minimum_size = Vector2(0, 150)
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 94.0
+offset_top = -188.0
+offset_right = -77.0
+offset_bottom = -38.0
+grow_horizontal = 2
+grow_vertical = 0
+color = Color(0, 0, 0, 1)
+
+[node name="Label" type="Label" parent="DialogueBox" unique_id=386649199]
+layout_mode = 0
+offset_left = 13.0
+offset_top = 13.0
+offset_right = 965.0
+offset_bottom = 133.0
+theme_override_fonts/font = ExtResource("1_vjh85")
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="DialogueBox" unique_id=1539467521]
+stream = ExtResource("1_qwhmd")
+volume_db = -12.0

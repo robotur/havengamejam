@@ -1,0 +1,13 @@
+[gd_scene format=3 uid="uid://dtw6awbc75oax"]
+
+[ext_resource type="Script" uid="uid://de0stxbnoyfoa" path="res://scripts/arrow.gd" id="1_23jat"]
+[ext_resource type="Texture2D" uid="uid://bksl1c2ndy1ku" path="res://assets/Pixel Crawler - Free Pack/Weapons/Bone/Bone.png" id="1_umosx"]
+
+[node name="Arrow" type="Node2D" unique_id=1081417008]
+script = ExtResource("1_23jat")
+hit_mask = 2
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1499612023]
+texture = ExtResource("1_umosx")
+region_enabled = true
+region_rect = Rect2(31.712612, 2.9031458, 17.001888, 8.255253)
