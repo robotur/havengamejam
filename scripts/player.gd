@@ -177,4 +177,16 @@ func _play_game_sound(method: StringName) -> void:
 
 
 func _on_cut_scene_area_body_entered(body: Node2D) -> void:
-	pass # Replace with function body.
+	pass
+	
+func fire_final_shot(target: Node2D) -> bool:
+	if is_instance_valid(target):
+		var gun_pivot: Node2D = $GunPivot
+		var direction := gun_pivot.global_position.direction_to(target.global_position)
+
+		if not direction.is_zero_approx():
+			shot_direction = direction
+			gun_pivot.rotation = direction.angle()
+			gun_pivot.scale.y = -1.0 if direction.x < 0.0 else 1.0
+
+	return _spawn_bullet()

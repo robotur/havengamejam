@@ -18,6 +18,7 @@ var current_line := 0
 var is_typing := false
 var dialogue_active := false
 var has_triggered := false
+var dialogue_player: Node2D
 
 
 func _ready() -> void:
@@ -43,6 +44,7 @@ func _on_wizard_trigger_body_entered(body: Node2D) -> void:
 
 
 func start_dialogue(player: Node2D) -> void:
+	dialogue_player = player
 	player.set_physics_process(false)
 	current_line = 0
 	dialogue_active = true
@@ -102,9 +104,17 @@ func show_line(index: int) -> void:
 func end_game_sequence() -> void:
 	dialogue_active = false
 	dialogue_box.hide()
+	label.hide()
+	$BlackScreen.show()
 
-	if gunshot_sound != null:
+	var witch := get_parent().get_node_or_null("Witch") as Node2D
+	var shot_fired := false
+
+	if is_instance_valid(dialogue_player):
+		shot_fired = bool(dialogue_player.call("fire_final_shot", witch))
+
+	if not shot_fired and gunshot_sound != null:
 		gunshot_sound.play()
 
-	await get_tree().create_timer(1.5).timeout
+	await get_tree().create_timer(5.0).timeout
 	get_tree().change_scene_to_file("res://scenes/Main_Menu.tscn")
